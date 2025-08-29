@@ -6,8 +6,10 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
+      <Header />
+      <Main />
       
-      <h1 className="bg-yellow">Welcome to my blog</h1>
+      <h1 className="bg-yellow-500 text-blue-500">Welcome to my blog</h1>
       
     </div>
   )
