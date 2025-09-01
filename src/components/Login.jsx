@@ -51,7 +51,7 @@ export default function Login() {
         console.log('Login successful:', data);
         
         // Redirect to dashboard or home page
-        window.location.href = '/'; // or wherever you want to redirect
+        window.location.href = '/editor/blog'; // or wherever you want to redirect
         
       } else {
         // Login failed
