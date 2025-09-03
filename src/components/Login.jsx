@@ -53,7 +53,7 @@ export default function Login() {
         console.log('Login successful:', data);
         
         // Redirect to dashboard or home page
-        navigate("/editor/blog")
+        navigate("/blog/dashboard")
         
       } else {
         // Login failed
