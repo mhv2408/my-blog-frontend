@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Lock, User, AlertCircle, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 export default function Login() {
   const [formData, setFormData] = useState({
     username: '',
     password: ''
   });
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -51,7 +53,7 @@ export default function Login() {
         console.log('Login successful:', data);
         
         // Redirect to dashboard or home page
-        window.location.href = '/editor/blog'; // or wherever you want to redirect
+        navigate("/editor/blog")
         
       } else {
         // Login failed
