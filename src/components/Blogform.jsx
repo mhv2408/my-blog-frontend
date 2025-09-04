@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   Save,
   Loader2,
@@ -8,12 +8,16 @@ import {
   Globe,
   Maximize2,
   Minimize2,
+  Edit3,
 } from "lucide-react"
 import MDEditor from "@uiw/react-md-editor"
 import "@uiw/react-md-editor/markdown-editor.css"
 import "@uiw/react-markdown-preview/markdown.css"
 
-export default function Blogform() {
+export default function BlogForm({ 
+  mode = "create", // "create" or "edit"
+  blogId = null,    // blog ID for edit mode
+}) {
   const [formData, setFormData] = useState({
     title: "",
     summary: "",
@@ -23,9 +27,43 @@ export default function Blogform() {
   const [loadingState, setLoadingState] = useState({
     draft: false,
     publish: false,
+    loading: false, // for initial data loading
   })
   const [message, setMessage] = useState({ type: "", text: "" })
   const [isFullscreen, setIsFullscreen] = useState(false)
+
+  // Load existing blog data for edit mode
+  useEffect(() => {
+    if (mode === "edit" && blogId) {
+      loadBlogData()
+    } 
+  }, [mode, blogId])
+
+  const loadBlogData = async () => {
+    setLoadingState(prev => ({ ...prev, loading: true }))
+    
+    try {
+      const response = await fetch(`http://localhost:8080/editor/post/${blogId}`, {
+        credentials: 'include'
+      })
+      
+      if (response.ok) {
+        const data = await response.json()
+        setFormData({
+          title: data.title || "",
+          summary: data.summary || "",
+          post: data.post || "",
+          status: data.status || "",
+        })
+      } else {
+        setMessage({ type: "error", text: "Failed to load blog data" })
+      }
+    } catch (error) {
+      setMessage({ type: "error", text: "Failed to load blog data" })
+    } finally {
+      setLoadingState(prev => ({ ...prev, loading: false }))
+    }
+  }
 
   const handleInputChange = (field, value) => {
     setFormData((prev) => ({
@@ -52,67 +90,94 @@ export default function Blogform() {
   }
 
   const handleSaveDraft = async () => {
-  if (!validateForm()) return
-  setLoadingState((prev) => ({ ...prev, draft: true }))
+    if (!validateForm()) return
+    setLoadingState((prev) => ({ ...prev, draft: true }))
 
-  try {
-    const response = await fetch("http://localhost:8080/editor/post", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: formData.title,
-        summary: formData.summary,
-        post: formData.post,
-        status: "draft",
-      }),
-      credentials:'include'
-    })
+    try {
+      const url = mode === "edit" 
+        ? `http://localhost:8080/editor/post/${blogId}`
+        : "http://localhost:8080/editor/post"
+      
+      const method = mode === "edit" ? "PUT" : "POST"
+      
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: formData.title,
+          summary: formData.summary,
+          post: formData.post,
+          status: "draft",
+        }),
+        credentials: 'include'
+      })
 
-    if (response.status === 201) {
-      setMessage({ type: "success", text: "Draft saved successfully!" })
-    } else {
-      throw new Error("Failed to save draft.")
+      if (response.status === 201 || response.status === 200) {
+        setMessage({ 
+          type: "success", 
+          text: `Draft ${mode === "edit" ? "updated" : "saved"} successfully!` 
+        })
+      } else {
+        throw new Error(`Failed to ${mode === "edit" ? "update" : "save"} draft.`)
+      }
+    } catch (error) {
+      setMessage({ 
+        type: "error", 
+        text: `Failed to ${mode === "edit" ? "update" : "save"} draft.` 
+      })
+    } finally {
+      setLoadingState((prev) => ({ ...prev, draft: false }))
     }
-  } catch (error) {
-    setMessage({ type: "error", text: "Failed to save draft." })
-  } finally {
-    setLoadingState((prev) => ({ ...prev, draft: false }))
   }
-}
 
-const handlePublish = async () => {
-  if (!validateForm()) return
-  setLoadingState((prev) => ({ ...prev, publish: true }))
+  const handlePublish = async () => {
+    if (!validateForm()) return
+    setLoadingState((prev) => ({ ...prev, publish: true }))
 
-  try {
-    const response = await fetch("http://localhost:8080/editor/post", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title: formData.title,
-        summary: formData.summary,
-        post: formData.post,
-        status: "publish",
-      }),
-      credentials:'include'
-    })
+    try {
+      const url = mode === "edit" 
+        ? `http://localhost:8080/editor/post/${blogId}`
+        : "http://localhost:8080/editor/post"
+      
+      const method = mode === "edit" ? "PUT" : "POST"
+      
+      const response = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: formData.title,
+          summary: formData.summary,
+          post: formData.post,
+          status: "publish",
+        }),
+        credentials: 'include'
+      })
 
-    if (response.status === 201) {
-      setMessage({ type: "success", text: "Blog published successfully!" })
-      setTimeout(() => {
-        setFormData({ title: "", summary: "", post: "", status: "" })
-        setMessage({ type: "", text: "" })
-      }, 2000)
-    } else {
-      throw new Error("Failed to publish blog.")
+      if (response.status === 201 || response.status === 200) {
+        setMessage({ 
+          type: "success", 
+          text: `Blog ${mode === "edit" ? "updated and published" : "published"} successfully!` 
+        })
+        
+        // Only reset form for create mode
+        if (mode === "create") {
+          setTimeout(() => {
+            setFormData({ title: "", summary: "", post: "", status: "" })
+            setMessage({ type: "", text: "" })
+          }, 2000)
+        }
+      } else {
+        throw new Error(`Failed to ${mode === "edit" ? "update and publish" : "publish"} blog.`)
+      }
+    } catch (error) {
+      setMessage({ 
+        type: "error", 
+        text: `Failed to ${mode === "edit" ? "update and publish" : "publish"} blog.` 
+      })
+    } finally {
+      setLoadingState((prev) => ({ ...prev, publish: false }))
     }
-  } catch (error) {
-    setMessage({ type: "error", text: "Failed to publish blog." })
-  } finally {
-    setLoadingState((prev) => ({ ...prev, publish: false }))
   }
-}
-
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen)
@@ -121,6 +186,18 @@ const handlePublish = async () => {
   const editorWrapperClass = isFullscreen
     ? "fixed inset-0 z-50 bg-gray-50 p-6 overflow-auto"
     : ""
+
+  // Show loading spinner while fetching data
+  if (loadingState.loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="flex items-center space-x-3 text-gray-600">
+          <Loader2 className="h-6 w-6 animate-spin" />
+          <span>Loading blog data...</span>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -134,14 +211,21 @@ const handlePublish = async () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div className="p-2 bg-gray-100 rounded-lg">
-                <FileText className="h-5 w-5 text-gray-600" />
+                {mode === "edit" ? (
+                  <Edit3 className="h-5 w-5 text-gray-600" />
+                ) : (
+                  <FileText className="h-5 w-5 text-gray-600" />
+                )}
               </div>
               <div>
                 <h1 className="text-xl font-semibold text-gray-900">
-                  Create New Blog Post
+                  {mode === "edit" ? "Edit Blog Post" : "Create New Blog Post"}
                 </h1>
                 <p className="text-gray-600 text-sm mt-0.5">
-                  Share your thoughts with the world
+                  {mode === "edit" 
+                    ? "Update your blog post" 
+                    : "Share your thoughts with the world"
+                  }
                 </p>
               </div>
             </div>
@@ -157,7 +241,9 @@ const handlePublish = async () => {
                 ) : (
                   <Save className="h-4 w-4" />
                 )}
-                <span className="text-sm">Save Draft</span>
+                <span className="text-sm">
+                  {mode === "edit" ? "Update Draft" : "Save Draft"}
+                </span>
               </button>
 
               <button
@@ -170,7 +256,9 @@ const handlePublish = async () => {
                 ) : (
                   <Globe className="h-4 w-4" />
                 )}
-                <span className="text-sm">Publish</span>
+                <span className="text-sm">
+                  {mode === "edit" ? "Update & Publish" : "Publish"}
+                </span>
               </button>
             </div>
           </div>

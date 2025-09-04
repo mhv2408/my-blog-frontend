@@ -101,12 +101,12 @@ export default function Dashboard() {
 
   const handleCreateNew = () => {
     // Navigate to create blog page
-    navigate("/blog/create_post"); // Replace with proper routing
+    navigate("/blog/create"); 
   };
 
   const handleEdit = (blogId) => {
     // Navigate to edit page
-    window.location.href = `/editor/edit/${blogId}`;
+    navigate(`/blog/edit/${blogId}`); 
   };
 
   const handleDelete = async (blogId) => {
