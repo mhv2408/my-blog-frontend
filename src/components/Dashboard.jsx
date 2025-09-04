@@ -15,6 +15,7 @@ import {
   BookOpen,
   TrendingUp
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const [blogs, setBlogs] = useState([]);
@@ -22,6 +23,7 @@ export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all'); // 'all', 'draft', 'published'
   const [showDropdown, setShowDropdown] = useState(null);
+  const navigate = useNavigate()
 
   // Mock data - replace with actual API call
   const mockBlogs = [
@@ -68,18 +70,18 @@ export default function Dashboard() {
     const fetchBlogs = async () => {
       setLoading(true);
       try {
-        // Replace with actual API call
-        // const response = await fetch('http://localhost:8080/editor/blogs', {
-        //   credentials: 'include'
-        // });
-        // const data = await response.json();
-        // setBlogs(data);
+         const response = await fetch('http://localhost:8080/editor/dashboard', {
+           credentials: 'include'
+         });
+         const data = await response.json();
+         setBlogs(data);
+         setLoading(false);
         
         // Using mock data for now
-        setTimeout(() => {
-          setBlogs(mockBlogs);
-          setLoading(false);
-        }, 1000);
+        //setTimeout(() => {
+          //setBlogs(mockBlogs);
+          //setLoading(false);
+        //}, 1000);
       } catch (error) {
         console.error('Failed to fetch blogs:', error);
         setLoading(false);
@@ -99,7 +101,7 @@ export default function Dashboard() {
 
   const handleCreateNew = () => {
     // Navigate to create blog page
-    window.location.href = '/editor/create'; // Replace with proper routing
+    navigate("/blog/create_post"); // Replace with proper routing
   };
 
   const handleEdit = (blogId) => {
@@ -298,17 +300,6 @@ export default function Dashboard() {
                       </div>
                       
                       <p className="text-gray-600 mb-3 line-clamp-2">{blog.summary}</p>
-                      
-                      <div className="flex items-center space-x-4 text-sm text-gray-500">
-                        <div className="flex items-center space-x-1">
-                          <Calendar className="h-4 w-4" />
-                          <span>Created {blog.createdAt}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Clock className="h-4 w-4" />
-                          <span>{blog.readTime}</span>
-                        </div>
-                      </div>
                     </div>
 
                     {/* Actions Dropdown */}

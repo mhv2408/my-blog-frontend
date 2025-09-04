@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     element: <Login/>
   },
   {
-    path: "editor/blog",
+    path: "blog/dashboard",
     element:(
       <ProtectedRoute>
         <Dashboard />
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
     ) 
   },
   {
-    path: "editor/blog",
+    path: "blog/create_post",
     element:(
       <ProtectedRoute>
         <Blogform />

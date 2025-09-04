@@ -276,7 +276,7 @@ const handlePublish = async () => {
                 data-color-mode="light"
                 className="rounded-lg overflow-hidden border border-gray-200 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-200"
               >
-                <style jsx>{`
+                <style>{`
                   .w-md-editor {
                     background-color: #fff !important;
                   }
