@@ -1,7 +1,32 @@
-import React from 'react'
 import { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
-import BlogPostItem from './BlogPostItem';
+
+// Mock BlogPostItem component with proper date formatting
+function BlogPostItem({ title, excerpt, date }) {
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  return (
+    <article className="border-b border-gray-200 pb-8">
+      <h4 className="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors cursor-pointer">
+        {title}
+      </h4>
+      <p className="text-gray-600 mb-4 leading-relaxed">
+        {excerpt}
+      </p>
+      <div className="flex items-center text-sm text-gray-500">
+        <span>{formatDate(date)}</span>
+      </div>
+    </article>
+  );
+}
+
 export default function BlogPost() {
   const [blogPosts, setBlogPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,7 +36,7 @@ export default function BlogPost() {
     const fetchBlogPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:8080/');
+        const response = await fetch('http://localhost:8080/get-blogs');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -82,10 +107,8 @@ export default function BlogPost() {
             <BlogPostItem
               key={post.id || index}
               title={post.title}
-              excerpt={post.excerpt}
-              date={post.date}
-              readTime={post.readTime}
-              slug={post.slug}
+              excerpt={post.summary}
+              date={post.published_at}
             />
           ))
         ) : (
