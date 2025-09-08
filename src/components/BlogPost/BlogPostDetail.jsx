@@ -42,7 +42,7 @@ export default function BlogPostDetail() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: blogPost.Title,
+          title: blogPost.title,
           url: window.location.href,
         });
       } catch (err) {
@@ -63,13 +63,13 @@ export default function BlogPostDetail() {
       day: 'numeric'
     });
   };
-
+/*
   const estimateReadTime = (content) => {
     const wordsPerMinute = 200;
     const wordCount = content.split(' ').length;
     const readTime = Math.ceil(wordCount / wordsPerMinute);
     return `${readTime} min read`;
-  };
+  }; */
 
   if (loading) {
     return (
@@ -149,20 +149,20 @@ export default function BlogPostDetail() {
           {/* Header */}
           <header className="px-8 py-12 border-b border-gray-200">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              {blogPost.Title}
+              {blogPost.title}
             </h1>
             
             <div className="flex flex-wrap items-center gap-6 text-gray-600">
               <div className="flex items-center">
                 <Calendar className="h-4 w-4 mr-2" />
-                <span>{formatDate(blogPost.PublishedAt)}</span>
+                <span>{formatDate(blogPost.publishedAt)}</span>
               </div>
-              
+              {/*
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />
                 <span>{estimateReadTime(blogPost.Post)}</span>
               </div>
-              
+                */}
               <button
                 onClick={handleShare}
                 className="flex items-center text-blue-600 hover:text-blue-700 transition-colors"
@@ -177,7 +177,7 @@ export default function BlogPostDetail() {
           <div className="px-8 py-12">
             <div className="prose prose-lg max-w-none">
               <MDEditor.Markdown 
-                source={blogPost.Post} 
+                source={blogPost.post} 
                 style={{ 
                   backgroundColor: 'transparent',
                   color: '#374151'
@@ -190,7 +190,7 @@ export default function BlogPostDetail() {
           <footer className="px-8 py-8 bg-gray-50 border-t border-gray-200">
             <div className="flex items-center justify-between">
               <div className="text-sm text-gray-600">
-                Published on {formatDate(blogPost.PublishedAt)}
+                Published on {formatDate(blogPost.publishedAt)}
               </div>
               
               <div className="flex items-center space-x-4">

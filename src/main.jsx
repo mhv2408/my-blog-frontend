@@ -8,6 +8,7 @@ import Blogform from './components/Blogform.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import Dashboard from './components/Dashboard.jsx'
 import EditBlogWrapper from './components/EditBlogWrapper.jsx'
+import BlogPostDetail from './components/BlogPost/BlogPostDetail.jsx'
 
 //define routes
 const router = createBrowserRouter([
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/:slug",
-    element:"",
+    element:<BlogPostDetail/>,
   },
   {
     path: "/login",

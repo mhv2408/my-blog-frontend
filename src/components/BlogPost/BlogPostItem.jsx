@@ -4,10 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 // BlogPost component for individual post rendering
 export default function BlogPostItem({ title, excerpt, date, readTime, slug }) {
-  const naviage = useNavigate()
+  const navigate = useNavigate()
 
   const handleClick=()=>{
-    naviage(`/${slug}`)
+    console.log("Blog clicked")
+    navigate(`/${slug}`)
   }
   return (
     <article className="border-b border-gray-200 pb-8 last:border-b-0">
