@@ -63,13 +63,13 @@ export default function BlogPostDetail() {
       day: 'numeric'
     });
   };
-/*
+
   const estimateReadTime = (content) => {
     const wordsPerMinute = 200;
     const wordCount = content.split(' ').length;
     const readTime = Math.ceil(wordCount / wordsPerMinute);
     return `${readTime} min read`;
-  }; */
+  }; 
 
   if (loading) {
     return (
@@ -157,12 +157,12 @@ export default function BlogPostDetail() {
                 <Calendar className="h-4 w-4 mr-2" />
                 <span>{formatDate(blogPost.publishedAt)}</span>
               </div>
-              {/*
+              {
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />
-                <span>{estimateReadTime(blogPost.Post)}</span>
+                <span>{estimateReadTime(blogPost.post)}</span>
               </div>
-                */}
+            }
               <button
                 onClick={handleShare}
                 className="flex items-center text-blue-600 hover:text-blue-700 transition-colors"
