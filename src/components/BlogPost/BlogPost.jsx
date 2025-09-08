@@ -105,10 +105,11 @@ export default function BlogPost() {
         {blogPosts.length > 0 ? (
           blogPosts.map((post, index) => (
             <BlogPostItem
-              key={post.id || index}
+              key={post.id}
               title={post.title}
               excerpt={post.summary}
               date={post.published_at}
+              slug={post.slug}
             />
           ))
         ) : (
