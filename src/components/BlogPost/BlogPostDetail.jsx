@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Share2 } from 'lucide-react';
 import MDEditor from '@uiw/react-md-editor';
+import "@uiw/react-md-editor/markdown-editor.css"
+import "@uiw/react-markdown-preview/markdown.css"
+
 
 export default function BlogPostDetail() {
   const { slug } = useParams();
@@ -173,19 +176,69 @@ export default function BlogPostDetail() {
             </div>
           </header>
 
-          {/* Content */}
+         {/* Content */}
           <div className="px-8 py-12">
             <div className="prose prose-lg max-w-none">
+                <style>{`
+                                        /* Apply to rendered markdown */
+                    .wmde-markdown {
+                    background-color: #fff !important;
+                    color: #111827 !important; /* Tailwind gray-900 */
+                    padding: 16px !important;
+                    border-radius: 8px;
+                    line-height: 1.6 !important;
+                    font-size: 14px !important;
+                    }
+
+                    /* Headings, paragraphs */
+                    .wmde-markdown h1,
+                    .wmde-markdown h2,
+                    .wmde-markdown h3,
+                    .wmde-markdown h4,
+                    .wmde-markdown h5,
+                    .wmde-markdown h6,
+                    .wmde-markdown p {
+                    color: #111827 !important;
+                    }
+
+                    /* Code blocks */
+                    .wmde-markdown pre {
+                    background: #f9fafb !important; /* Tailwind gray-50 */
+                    color: #1f2937 !important;      /* Tailwind gray-800 */
+                    padding: 16px !important;
+                    border-radius: 6px !important;
+                    overflow-x: auto;
+                    font-size: 13px !important;
+                    }
+
+                    /* Inline code */
+                    .wmde-markdown code {
+                    background-color: #f9fafb !important;
+                    color: #d6336c !important;
+                    padding: 2px 6px;
+                    border-radius: 4px;
+                    font-size: 13px;
+                    }
+
+                    /* Blockquotes */
+                    .wmde-markdown blockquote {
+                    border-left: 4px solid #e5e7eb;
+                    background: #f9fafb;
+                    padding: 8px 16px;
+                    color: #4b5563;
+                    border-radius: 4px;
+                    }`}</style>
               <MDEditor.Markdown 
                 source={blogPost.post} 
                 style={{ 
                   backgroundColor: 'transparent',
-                  color: '#374151'
+                  whiteSpace: 'pre-wrap',
+                  color: 'black',
                 }}
               />
             </div>
           </div>
-
+ 
           {/* Footer */}
           <footer className="px-8 py-8 bg-gray-50 border-t border-gray-200">
             <div className="flex items-center justify-between">
