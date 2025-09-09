@@ -23,8 +23,6 @@ export default function BlogPostItem({ title, excerpt, date, readTime, slug }) {
         </p>
         <div className="flex items-center text-sm text-gray-500 space-x-4">
           <span>{date}</span>
-          <span>•</span>
-          <span>{readTime}</span>
         </div>
       </div>
     </article>
