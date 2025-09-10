@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Share2 } from 'lucide-react';
-import MDEditor from '@uiw/react-md-editor';
-import "@uiw/react-md-editor/markdown-editor.css"
-import "@uiw/react-markdown-preview/markdown.css"
-
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import 'highlight.js/styles/github.css';
 
 export default function BlogPostDetail() {
   const { slug } = useParams();
@@ -160,12 +160,10 @@ export default function BlogPostDetail() {
                 <Calendar className="h-4 w-4 mr-2" />
                 <span>{formatDate(blogPost.publishedAt)}</span>
               </div>
-              {
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />
                 <span>{estimateReadTime(blogPost.post)}</span>
               </div>
-            }
               <button
                 onClick={handleShare}
                 className="flex items-center text-blue-600 hover:text-blue-700 transition-colors"
@@ -176,69 +174,162 @@ export default function BlogPostDetail() {
             </div>
           </header>
 
-         {/* Content */}
+          {/* Content */}
           <div className="px-8 py-12">
-            <div className="prose prose-lg max-w-none">
-                <style>{`
-                                        /* Apply to rendered markdown */
-                    .wmde-markdown {
-                    background-color: #fff !important;
-                    color: #111827 !important; /* Tailwind gray-900 */
-                    padding: 16px !important;
-                    border-radius: 8px;
-                    line-height: 1.6 !important;
-                    font-size: 14px !important;
+            <div className="prose prose-lg prose-gray max-w-none">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight]}
+                components={{
+                  // Custom heading styles
+                  h1: ({ children }) => (
+                    <h1 className="text-3xl font-bold text-gray-900 mt-8 mb-4 first:mt-0">
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="text-2xl font-semibold text-gray-900 mt-8 mb-4 first:mt-0">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">
+                      {children}
+                    </h3>
+                  ),
+                  h4: ({ children }) => (
+                    <h4 className="text-lg font-semibold text-gray-900 mt-6 mb-3">
+                      {children}
+                    </h4>
+                  ),
+                  
+                  // Custom paragraph styles
+                  p: ({ children }) => (
+                    <p className="text-gray-700 leading-relaxed mb-4">
+                      {children}
+                    </p>
+                  ),
+                  
+                  // Custom code block styles
+                 pre: ({ children }) => (
+                    <div className="relative my-6">
+                      <pre className="bg-gray-100 text-gray-900 p-1 rounded-lg overflow-x-auto font-mono text-sm">
+                        {children}
+                      </pre>
+                    </div>
+                  ),
+                  code({ node, inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || '');
+                    
+                    // For inline code
+                    if (inline) {
+                      return (
+                        <code className="bg-red-50 text-red-600 px-2 py-1 rounded text-sm font-mono" {...props}>
+                          {children}
+                        </code>
+                      );
                     }
-
-                    /* Headings, paragraphs */
-                    .wmde-markdown h1,
-                    .wmde-markdown h2,
-                    .wmde-markdown h3,
-                    .wmde-markdown h4,
-                    .wmde-markdown h5,
-                    .wmde-markdown h6,
-                    .wmde-markdown p {
-                    color: #111827 !important;
-                    }
-
-                    /* Code blocks */
-                    .wmde-markdown pre {
-                    background: #f9fafb !important; /* Tailwind gray-50 */
-                    color: #1f2937 !important;      /* Tailwind gray-800 */
-                    padding: 16px !important;
-                    border-radius: 6px !important;
-                    overflow-x: auto;
-                    font-size: 13px !important;
-                    }
-
-                    /* Inline code */
-                    .wmde-markdown code {
-                    background-color: #f9fafb !important;
-                    color: #d6336c !important;
-                    padding: 2px 6px;
-                    border-radius: 4px;
-                    font-size: 13px;
-                    }
-
-                    /* Blockquotes */
-                    .wmde-markdown blockquote {
-                    border-left: 4px solid #e5e7eb;
-                    background: #f9fafb;
-                    padding: 8px 16px;
-                    color: #4b5563;
-                    border-radius: 4px;
-                    }`}</style>
-              <MDEditor.Markdown 
-                source={blogPost.post} 
-                style={{ 
-                  backgroundColor: 'transparent',
-                  whiteSpace: 'pre-wrap',
-                  color: 'black',
+                    
+                    // For code blocks - add language label if present
+                    return (
+                      <>
+                        {match && (
+                          <div className="absolute top-3 right-3 text-xs text-gray-900 uppercase font-medium z-10">
+                            {match[1]}
+                          </div>
+                        )}
+                        <code className={`${className} block`} {...props}>
+                          {children}
+                        </code>
+                      </>
+                    );
+                  },
+                  
+                  // Custom blockquote styles
+                  blockquote: ({ children }) => (
+                    <blockquote className="border-l-4 border-blue-500 bg-blue-50 p-4 my-6 italic rounded-r-lg">
+                      <div className="text-blue-900">{children}</div>
+                    </blockquote>
+                  ),
+                  
+                  // Custom list styles
+                  ul: ({ children }) => (
+                    <ul className="list-disc list-inside space-y-2 mb-4 text-gray-700">
+                      {children}
+                    </ul>
+                  ),
+                  ol: ({ children }) => (
+                    <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-700">
+                      {children}
+                    </ol>
+                  ),
+                  li: ({ children }) => (
+                    <li className="ml-2">{children}</li>
+                  ),
+                  
+                  // Custom table styles
+                  table: ({ children }) => (
+                    <div className="overflow-x-auto my-6">
+                      <table className="min-w-full divide-y divide-gray-200 border border-gray-200 rounded-lg">
+                        {children}
+                      </table>
+                    </div>
+                  ),
+                  thead: ({ children }) => (
+                    <thead className="bg-gray-50">
+                      {children}
+                    </thead>
+                  ),
+                  th: ({ children }) => (
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-r border-b border-gray-200">
+                      {children}
+                    </th>
+                  ),
+                  td: ({ children }) => (
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 border-r border-b border-gray-200">
+                      {children}
+                    </td>
+                  ),
+                  
+                  // Custom link styles
+                  a: ({ href, children }) => (
+                    <a 
+                      href={href} 
+                      className="text-blue-600 hover:text-blue-700 underline transition-colors"
+                      target={href?.startsWith('http') ? '_blank' : '_self'}
+                      rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    >
+                      {children}
+                    </a>
+                  ),
+                  
+                  // Custom image styles
+                  img: ({ src, alt }) => (
+                    <div className="my-6">
+                      <img 
+                        src={src} 
+                        alt={alt} 
+                        className="w-full rounded-lg shadow-sm"
+                      />
+                      {alt && (
+                        <p className="text-sm text-gray-600 text-center mt-2 italic">
+                          {alt}
+                        </p>
+                      )}
+                    </div>
+                  ),
+                  
+                  // Custom horizontal rule
+                  hr: () => (
+                    <hr className="my-8 border-gray-300" />
+                  ),
                 }}
-              />
+              >
+                {blogPost.post}
+              </ReactMarkdown>
             </div>
           </div>
- 
+
           {/* Footer */}
           <footer className="px-8 py-8 bg-gray-50 border-t border-gray-200">
             <div className="flex items-center justify-between">
@@ -265,7 +356,7 @@ export default function BlogPostDetail() {
           </footer>
         </article>
 
-        {/* Back to top button (optional) */}
+        {/* Back to top button */}
         <div className="mt-12 text-center">
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
