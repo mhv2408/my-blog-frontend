@@ -59,11 +59,11 @@ export default function BlogPostDetail() {
   };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    
+    return new Date(dateString).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
     });
   };
 
@@ -158,7 +158,7 @@ export default function BlogPostDetail() {
             <div className="flex flex-wrap items-center gap-6 text-gray-600">
               <div className="flex items-center">
                 <Calendar className="h-4 w-4 mr-2" />
-                <span>{formatDate(blogPost.publishedAt)}</span>
+                <span>{formatDate(blogPost.published_at)}</span>
               </div>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />
@@ -166,7 +166,7 @@ export default function BlogPostDetail() {
               </div>
               <button
                 onClick={handleShare}
-                className="flex items-center text-blue-600 hover:text-blue-700 transition-colors"
+                className="flex items-center text-blue-600 hover:text-blue-700 transition-colors cursor-pointer"
               >
                 <Share2 className="h-4 w-4 mr-2" />
                 Share
@@ -332,25 +332,9 @@ export default function BlogPostDetail() {
 
           {/* Footer */}
           <footer className="px-8 py-8 bg-gray-50 border-t border-gray-200">
-            <div className="flex items-center justify-between">
-              <div className="text-sm text-gray-600">
-                Published on {formatDate(blogPost.publishedAt)}
-              </div>
-              
+            <div className="flex items-center justify-between"> 
               <div className="flex items-center space-x-4">
-                <button
-                  onClick={handleShare}
-                  className="text-sm text-blue-600 hover:text-blue-700 transition-colors"
-                >
-                  Share this post
-                </button>
-                
-                <button
-                  onClick={() => navigate('/')}
-                  className="text-sm text-gray-600 hover:text-gray-700 transition-colors"
-                >
-                  ← More posts
-                </button>
+            
               </div>
             </div>
           </footer>
@@ -360,7 +344,7 @@ export default function BlogPostDetail() {
         <div className="mt-12 text-center">
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="text-blue-600 hover:text-blue-700 transition-colors"
+            className="text-blue-600 hover:text-green-700 transition-colors"
           >
             Back to top ↑
           </button>

@@ -83,7 +83,13 @@ export default function BlogPost() {
               key={post.id}
               title={post.title}
               excerpt={post.summary}
-              date={post.published_at}
+              date={
+                new Date(post.published_at).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+              }
               slug={post.slug}
             />
           ))
