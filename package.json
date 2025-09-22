@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.12",
     "@uiw/react-md-editor": "^4.0.8",
+    "github-markdown-css": "^5.8.1",
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.542.0",
     "react": "^19.1.1",

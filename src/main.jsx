@@ -18,7 +18,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/:slug",
-    element:<BlogPostDetail/>,
+    element:<BlogPostDetail/>
+    ,
   },
   {
     path: "/login",

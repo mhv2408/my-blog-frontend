@@ -8,10 +8,10 @@ export default function Footer() {
           <div className="flex items-center space-x-6">
             <a 
               href="mailto:mhv2408@gmail.com"
-              className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
+              className="flex items-center space-x-2 text-gray-700 hover:text-red-600 transition-colors duration-200"
               aria-label="Send email"
             >
-              <Mail size={20} />
+              <Mail size={30} />
             </a>
             
             <a 
@@ -21,17 +21,17 @@ export default function Footer() {
               className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200"
               aria-label="LinkedIn profile"
             >
-              <Linkedin size={20} />
+              <Linkedin size={30} />
             </a>
             
             <a 
               href="https://github.com/mhv2408"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors duration-200"
+              className="flex items-center space-x-2 text-gray-700 hover:text-green-600 transition-colors duration-200"
               aria-label="GitHub profile"
             >
-              <Github size={20} />
+              <Github size={30} />
             </a>
           </div>
         </div>
