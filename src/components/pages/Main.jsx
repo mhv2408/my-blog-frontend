@@ -1,5 +1,5 @@
-import Hero from './Hero'
-import BlogPost from './BlogPost/BlogPost'
+import Hero from '../layout/Hero'
+import BlogPost from '../blog/BlogPost/BlogPost'
 export default function Main(){
 
     return (

@@ -7,7 +7,7 @@ export default function Header(){
           <nav className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Harsha Vardhan Mirthinti</h1>
-              <p className="text-gray-600 mt-1">square peg in a round hole</p>
+              <p className="text-gray-600 mt-1">Discerningly Curious</p>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <a href="#" className="text-gray-700 hover:text-gray-900 transition-colors">Shoutouts</a>

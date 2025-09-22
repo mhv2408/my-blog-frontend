@@ -134,7 +134,7 @@ export default function BlogPostDetail() {
   return (
     <div className="max-w-4xl mx-auto p-8">
       {/* Article Container */}
-      <article className="bg-white rounded-lg shadow-sm overflow-hidden">
+      <article className="bg-grey rounded-lg border shadow-sm overflow-hidden">
         <header className="px-8 py-12 border-b border-gray-200">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
             {blogPost.title}

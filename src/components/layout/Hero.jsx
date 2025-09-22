@@ -1,6 +1,3 @@
-
-import { ArrowRight, Github, Twitter, Linkedin, Mail } from 'lucide-react';
-import SocialLink from './SocialLink';
 export default function Hero(){
 
     return (
