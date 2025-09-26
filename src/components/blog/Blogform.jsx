@@ -400,7 +400,7 @@ export default function BlogForm({
 
                 <MDEditor
                   value={formData.content}
-                  onChange={(value) => handleInputChange("post", value || "")}
+                  onChange={(value) => handleInputChange("content", value || "")}
                   height={isFullscreen ? window.innerHeight - 150 : 350}
                   visibleDragbar={false}
                   preview={isFullscreen ? "live" : "edit"}
