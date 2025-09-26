@@ -11,7 +11,7 @@ export default function BlogPost() {
     const fetchBlogPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch('http://localhost:8080/get-blogs');
+        const response = await fetch('http://localhost:8080/blogs');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

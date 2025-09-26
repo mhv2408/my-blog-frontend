@@ -21,7 +21,7 @@ export default function BlogForm({
   const [formData, setFormData] = useState({
     title: "",
     summary: "",
-    post: "",
+    content: "",
     status: "",
   })
   const [loadingState, setLoadingState] = useState({
@@ -43,7 +43,7 @@ export default function BlogForm({
     setLoadingState(prev => ({ ...prev, loading: true }))
     
     try {
-      const response = await fetch(`http://localhost:8080/editor/post/${blogId}`, {
+      const response = await fetch(`http://localhost:8080/editor/blog/${blogId}`, {
         credentials: 'include'
       })
       
@@ -52,7 +52,7 @@ export default function BlogForm({
         setFormData({
           title: data.title || "",
           summary: data.summary || "",
-          post: data.post || "",
+          content: data.content || "",
           status: data.status || "",
         })
       } else {
@@ -82,8 +82,8 @@ export default function BlogForm({
       setMessage({ type: "error", text: "Blog summary is required" })
       return false
     }
-    if (!formData.post.trim()) {
-      setMessage({ type: "error", text: "Blog post is required" })
+    if (!formData.content.trim()) {
+      setMessage({ type: "error", text: "Blog content is required" })
       return false
     }
     return true
@@ -95,8 +95,8 @@ export default function BlogForm({
 
     try {
       const url = mode === "edit" 
-        ? `http://localhost:8080/editor/post/${blogId}`
-        : "http://localhost:8080/editor/post"
+        ? `http://localhost:8080/editor/blog/${blogId}`
+        : "http://localhost:8080/editor/blog"
       
       const method = mode === "edit" ? "PUT" : "POST"
       
@@ -106,7 +106,7 @@ export default function BlogForm({
         body: JSON.stringify({
           title: formData.title,
           summary: formData.summary,
-          post: formData.post,
+          content: formData.content,
           status: "draft",
         }),
         credentials: 'include'
@@ -136,8 +136,8 @@ export default function BlogForm({
 
     try {
       const url = mode === "edit" 
-        ? `http://localhost:8080/editor/post/${blogId}`
-        : "http://localhost:8080/editor/post"
+        ? `http://localhost:8080/editor/blog/${blogId}`
+        : "http://localhost:8080/editor/blog"
       
       const method = mode === "edit" ? "PUT" : "POST"
       
@@ -147,8 +147,8 @@ export default function BlogForm({
         body: JSON.stringify({
           title: formData.title,
           summary: formData.summary,
-          post: formData.post,
-          status: "publish",
+          content: formData.content,
+          status: "published",
         }),
         credentials: 'include'
       })
@@ -162,7 +162,7 @@ export default function BlogForm({
         // Only reset form for create mode
         if (mode === "create") {
           setTimeout(() => {
-            setFormData({ title: "", summary: "", post: "", status: "" })
+            setFormData({ title: "", summary: "", content: "", status: "" })
             setMessage({ type: "", text: "" })
           }, 2000)
         }
@@ -399,7 +399,7 @@ export default function BlogForm({
                 `}</style>
 
                 <MDEditor
-                  value={formData.post}
+                  value={formData.content}
                   onChange={(value) => handleInputChange("post", value || "")}
                   height={isFullscreen ? window.innerHeight - 150 : 350}
                   visibleDragbar={false}

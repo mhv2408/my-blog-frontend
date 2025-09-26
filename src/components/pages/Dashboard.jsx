@@ -84,7 +84,7 @@ export default function Dashboard() {
     if (window.confirm('Are you sure you want to delete this blog post?')) {
       try {
         // API call to delete
-         await fetch(`http://localhost:8080/editor/post/${blogId}`, {
+         await fetch(`http://localhost:8080/editor/blog/${blogId}`, {
            method: 'DELETE',
            credentials: 'include'
          });
@@ -100,7 +100,7 @@ export default function Dashboard() {
   const handleStatusChange = async (blogId, newStatus) => {
     try {
       // API call to update status
-       await fetch(`http://localhost:8080/editor/post/${blogId}/status`, {
+       await fetch(`http://localhost:8080/editor/blog/${blogId}/status`, {
          method: 'PATCH',
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify({ status: newStatus }),

@@ -16,7 +16,7 @@ export default function BlogPostDetail() {
     const fetchBlogPost = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/get-post/${slug}`);
+        const response = await fetch(`http://localhost:8080/blogs/${slug}`);
         
         if (!response.ok) {
           if (response.status === 404) {
@@ -147,7 +147,7 @@ export default function BlogPostDetail() {
             </div>
             <div className="flex items-center">
               <Clock className="h-4 w-4 mr-2" />
-              <span>{estimateReadTime(blogPost.post)}</span>
+              <span>{estimateReadTime(blogPost.content)}</span>
             </div>
             <button
               onClick={handleShare}
@@ -163,7 +163,7 @@ export default function BlogPostDetail() {
           <div data-color-mode="light" className="markdown-body">
 
             <Markdown remarkPlugins={[remarkGfm]}>
-              {blogPost.post}
+              {blogPost.content}
             </Markdown>
             
           </div>
