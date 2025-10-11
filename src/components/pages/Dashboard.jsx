@@ -125,7 +125,7 @@ export default function Dashboard() {
 
   const stats = {
     total: blogs.length,
-    published: blogs.filter(b => b.status === 'publish').length,
+    published: blogs.filter(b => b.status === 'published').length,
     drafts: blogs.filter(b => b.status === 'draft').length
   };
 
@@ -259,11 +259,11 @@ export default function Dashboard() {
                           {blog.title}
                         </h3>
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                          blog.status === 'publish' 
+                          blog.status === 'published' 
                             ? 'bg-green-100 text-green-800' 
                             : 'bg-orange-100 text-orange-800'
                         }`}>
-                          {blog.status === 'publish' ? (
+                          {blog.status === 'published' ? (
                             <>
                               <Globe className="w-3 h-3 mr-1" />
                               Published
@@ -304,12 +304,12 @@ export default function Dashboard() {
                           
                           <button
                             onClick={() => {
-                              handleStatusChange(blog.id, blog.status === 'publish' ? 'draft' : 'publish');
+                              handleStatusChange(blog.id, blog.status === 'published' ? 'draft' : 'published');
                               setShowDropdown(null);
                             }}
                             className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                           >
-                            {blog.status === 'publish' ? (
+                            {blog.status === 'published' ? (
                               <>
                                 <FileText className="h-4 w-4" />
                                 <span>Move to Draft</span>
