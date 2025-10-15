@@ -8,7 +8,7 @@ export default function ProtectedRoute({children}) {
     useEffect(() => {
         async function checkAuth() {
         try {
-            const res = await fetch("http://localhost:8080/editor/blog", {
+            const res = await fetch("https://my-blog-568257561535.us-central1.run.app/editor/blog", {
             credentials: "include", // send cookies
             });
             console.log(res)

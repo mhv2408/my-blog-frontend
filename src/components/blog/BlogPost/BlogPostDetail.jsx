@@ -16,7 +16,7 @@ export default function BlogPostDetail() {
     const fetchBlogPost = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:8080/blogs/${slug}`);
+        const response = await fetch(`https://my-blog-568257561535.us-central1.run.app/blogs/${slug}`);
         
         if (!response.ok) {
           if (response.status === 404) {

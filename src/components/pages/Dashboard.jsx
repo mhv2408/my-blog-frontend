@@ -41,7 +41,7 @@ export default function Dashboard() {
     const fetchBlogs = async () => {
         setLoading(true);
         try {
-        const response = await fetch('http://localhost:8080/editor/dashboard', {
+        const response = await fetch('https://my-blog-568257561535.us-central1.run.app/editor/dashboard', {
             credentials: 'include'
         });
         
@@ -84,7 +84,7 @@ export default function Dashboard() {
     if (window.confirm('Are you sure you want to delete this blog post?')) {
       try {
         // API call to delete
-         await fetch(`http://localhost:8080/editor/blog/${blogId}`, {
+         await fetch(`https://my-blog-568257561535.us-central1.run.app/editor/blog/${blogId}`, {
            method: 'DELETE',
            credentials: 'include'
          });
@@ -100,7 +100,7 @@ export default function Dashboard() {
   const handleStatusChange = async (blogId, newStatus) => {
     try {
       // API call to update status
-       await fetch(`http://localhost:8080/editor/blog/${blogId}/status`, {
+       await fetch(`https://my-blog-568257561535.us-central1.run.app/editor/blog/${blogId}/status`, {
          method: 'PATCH',
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify({ status: newStatus }),

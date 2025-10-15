@@ -43,7 +43,7 @@ export default function BlogForm({
     setLoadingState(prev => ({ ...prev, loading: true }))
     
     try {
-      const response = await fetch(`http://localhost:8080/editor/blog/${blogId}`, {
+      const response = await fetch(`https://my-blog-568257561535.us-central1.run.app/editor/blog/${blogId}`, {
         credentials: 'include'
       })
       
@@ -136,8 +136,8 @@ export default function BlogForm({
 
     try {
       const url = mode === "edit" 
-        ? `http://localhost:8080/editor/blog/${blogId}`
-        : "http://localhost:8080/editor/blog"
+        ? `https://my-blog-568257561535.us-central1.run.app/editor/blog/${blogId}`
+        : "https://my-blog-568257561535.us-central1.run.app/editor/blog"
       
       const method = mode === "edit" ? "PUT" : "POST"
       
