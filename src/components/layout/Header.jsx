@@ -10,8 +10,7 @@ export default function Header(){
               <p className="text-gray-600 mt-1">Discerningly Curious</p>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/shoutouts" className="text-gray-700 hover:text-gray-900 transition-colors">Shoutouts</Link>
-              <Link href="#" className="text-gray-700 hover:text-gray-900 transition-colors">Contact</Link>
+              <Link to="/shoutouts" className="px-4 py-2 text-gray-700 font-medium rounded-lg hover:text-gray-900 hover:bg-gray-100 transition-colors">Shoutouts</Link>
             </div>
           </nav>
         </div>

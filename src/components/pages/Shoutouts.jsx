@@ -13,7 +13,7 @@ export default function Shoutouts() {
       comment: "Go programming expert who writes incredibly insightful articles about software engineering practices, performance optimization, and clean code principles.",
       tags: ["Go Programming", "Performance", "Best Practices"],
       featuredPost: {
-        title: "",
+        title: "Prefer table driven tests",
         url: "https://dave.cheney.net/2019/05/07/prefer-table-driven-tests"
       }
     },
@@ -52,11 +52,11 @@ export default function Shoutouts() {
         {/* Header */}
         <div className="mb-16 text-center">
           <h1 className="text-5xl font-light text-gray-900 mb-4 tracking-tight">
-            Inspiring Voices
+            My Digital Library
           </h1>
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent mx-auto mb-6"></div>
+          <div className="w-100 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent mx-auto mb-6"></div>
           <p className="text-gray-500 max-w-2xl mx-auto font-light leading-relaxed">
-            Curated collection of brilliant minds who shape the way I think about technology, design, and craft.
+            People whose blogs I enjoy.
           </p>
         </div>
 
@@ -120,20 +120,6 @@ export default function Shoutouts() {
           ))}
         </div>
 
-        {/* Footer Call to Action */}
-        <div className="mt-20 pt-12 text-center border-t border-gray-100">
-          <div className="space-y-3">
-            <h2 className="text-lg font-light text-gray-700">
-              Know someone who deserves recognition?
-            </h2>
-            <a 
-              href="mailto:your-email@example.com" 
-              className="inline-block text-blue-600 hover:text-blue-700 transition-colors font-mono text-sm tracking-wide underline underline-offset-4"
-            >
-              suggest@yoursite.com
-            </a>
-          </div>
-        </div>
 
         {/* Footer Note */}
         <div className="mt-16 text-center">
