@@ -18,6 +18,7 @@ export default function BlogForm({
   mode = "create", // "create" or "edit"
   blogId = null,    // blog ID for edit mode
 }) {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     title: "",
     summary: "",
@@ -43,7 +44,7 @@ export default function BlogForm({
     setLoadingState(prev => ({ ...prev, loading: true }))
     
     try {
-      const response = await fetch(`https://my-blog-568257561535.us-central1.run.app/editor/blog/${blogId}`, {
+      const response = await fetch(`${BASE_URL}/editor/blog/${blogId}`, {
         credentials: 'include'
       })
       
@@ -95,8 +96,8 @@ export default function BlogForm({
 
     try {
       const url = mode === "edit" 
-        ? `http://localhost:8080/editor/blog/${blogId}`
-        : "http://localhost:8080/editor/blog"
+        ? `${BASE_URL}/editor/blog/${blogId}`
+        : `${BASE_URL}/editor/blog`
       
       const method = mode === "edit" ? "PUT" : "POST"
       
@@ -136,8 +137,8 @@ export default function BlogForm({
 
     try {
       const url = mode === "edit" 
-        ? `https://my-blog-568257561535.us-central1.run.app/editor/blog/${blogId}`
-        : "https://my-blog-568257561535.us-central1.run.app/editor/blog"
+        ? `${BASE_URL}/editor/blog/${blogId}`
+        : `${BASE_URL}/editor/blog`
       
       const method = mode === "edit" ? "PUT" : "POST"
       

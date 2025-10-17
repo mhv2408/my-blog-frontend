@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import BlogPostItem from './BlogPostItem';
 
 export default function BlogPost() {
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const [blogPosts, setBlogPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,7 +12,7 @@ export default function BlogPost() {
     const fetchBlogPosts = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://my-blog-568257561535.us-central1.run.app/blogs');
+        const response = await fetch(`${BASE_URL}/blogs`);
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

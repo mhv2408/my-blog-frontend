@@ -6,6 +6,8 @@ import remarkGfm from 'remark-gfm';
 import 'github-markdown-css/github-markdown-light.css';
 
 export default function BlogPostDetail() {
+
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const { slug } = useParams();
   const navigate = useNavigate();
   const [blogPost, setBlogPost] = useState(null);
@@ -16,7 +18,7 @@ export default function BlogPostDetail() {
     const fetchBlogPost = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`https://my-blog-568257561535.us-central1.run.app/blogs/${slug}`);
+        const response = await fetch(`${BASE_URL}/blogs/${slug}`);
         
         if (!response.ok) {
           if (response.status === 404) {

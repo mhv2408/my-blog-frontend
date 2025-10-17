@@ -4,11 +4,12 @@ import { Navigate } from "react-router-dom";
 export default function ProtectedRoute({children}) {
 
     const [isAuth, setIsAuth] = useState(null); // null = loading
+    const BASE_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         async function checkAuth() {
         try {
-            const res = await fetch("https://my-blog-568257561535.us-central1.run.app/editor/blog", {
+            const res = await fetch(`${BASE_URL}/editor/blog`, {
             credentials: "include", // send cookies
             });
             console.log(res)

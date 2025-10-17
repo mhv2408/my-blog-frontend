@@ -6,6 +6,7 @@ export default function Login() {
     username: '',
     password: ''
   });
+  const BASE_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +35,7 @@ export default function Login() {
     setError('');
 
     try {
-      const response = await fetch('https://my-blog-568257561535.us-central1.run.app/login', {
+      const response = await fetch(`${BASE_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
