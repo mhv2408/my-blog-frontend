@@ -101,7 +101,7 @@ export default function Dashboard() {
   const handleStatusChange = async (blogId, newStatus) => {
     try {
       // API call to update status
-       await fetch(`${BASE_URL}/${blogId}/status`, {
+       await fetch(`${BASE_URL}/editor/blog/${blogId}/status`, {
          method: 'PATCH',
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify({ status: newStatus }),
